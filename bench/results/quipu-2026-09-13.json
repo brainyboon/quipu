@@ -1,0 +1,74 @@
+{
+  "system": "quipu",
+  "scored_questions": 616,
+  "question_rows_in_file": 616,
+  "unroutable_rows": {},
+  "judge_methods": {
+    "llm_judge": 614,
+    "missing_answer": 2
+  },
+  "overall": {
+    "micro": {
+      "AA": 0.2913961038961039,
+      "SEH@3": 0.3344155844155844,
+      "SEH@5": 0.38961038961038963,
+      "log_rank@3": 0.29156860452806294,
+      "EUG_gap@3": 0.04301948051948051,
+      "EUG@5": 0.7333333333333333
+    },
+    "macro_memconflict_protocol": {
+      "AA": 0.4085239085239085,
+      "SEH@3": 0.46023331023331027,
+      "SEH@5": 0.512970662970663,
+      "log_rank@3": 0.425448901433102,
+      "EUG_gap@3": 0.05170940170940174,
+      "EUG@5": 0.7446953405017921
+    }
+  },
+  "by_conflict_type": {
+    "dynamic_conflict": {
+      "N": 481,
+      "AA": 0.22557172557172558,
+      "SEH@3": 0.26403326403326405,
+      "SEH@5": 0.32224532224532226,
+      "N_at_5": 481,
+      "log_rank@3": 0.21638781990644687,
+      "EUG_gap@3": 0.038461538461538464,
+      "EUG@5": 0.6774193548387096,
+      "EUG@5_N": 155,
+      "diagnostic": {
+        "UOCS": 0.26403326403326405
+      }
+    },
+    "static_conflict": {
+      "N": 60,
+      "AA": 0.26666666666666666,
+      "SEH@3": 0.31666666666666665,
+      "SEH@5": 0.4166666666666667,
+      "N_at_5": 60,
+      "log_rank@3": 0.2648798210119062,
+      "EUG_gap@3": 0.04999999999999999,
+      "EUG@5": 0.64,
+      "EUG@5_N": 25,
+      "diagnostic": {
+        "CRS": 0.38333333333333336
+      }
+    },
+    "conditional_conflict": {
+      "N": 75,
+      "AA": 0.7333333333333333,
+      "SEH@3": 0.8,
+      "SEH@5": 0.8,
+      "N_at_5": 75,
+      "log_rank@3": 0.7950790633809528,
+      "EUG_gap@3": 0.06666666666666676,
+      "EUG@5": 0.9166666666666666,
+      "EUG@5_N": 60,
+      "diagnostic": null
+    }
+  },
+  "metric_notes": {
+    "EUG_gap@3": "upstream MemConflict EUG: SEH@3 - AA per type; macro value = Average_EUG",
+    "EUG@5": "this repo only: mean AA over questions whose gold evidence reached rank <= 5"
+  }
+}

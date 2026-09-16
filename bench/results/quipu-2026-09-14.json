@@ -1,0 +1,74 @@
+{
+  "system": "quipu",
+  "scored_questions": 616,
+  "question_rows_in_file": 616,
+  "unroutable_rows": {},
+  "judge_methods": {
+    "llm_judge": 615,
+    "missing_answer": 1
+  },
+  "overall": {
+    "micro": {
+      "AA": 0.4797077922077922,
+      "SEH@3": 0.5616883116883117,
+      "SEH@5": 0.6071428571428571,
+      "log_rank@3": 0.44888057464633835,
+      "EUG_gap@3": 0.08198051948051949,
+      "EUG@5": 0.767379679144385
+    },
+    "macro_memconflict_protocol": {
+      "AA": 0.5198255948255949,
+      "SEH@3": 0.5553060753060753,
+      "SEH@5": 0.6402887502887503,
+      "log_rank@3": 0.3863884470309887,
+      "EUG_gap@3": 0.03548048048048045,
+      "EUG@5": 0.7621666257618521
+    }
+  },
+  "by_conflict_type": {
+    "dynamic_conflict": {
+      "N": 481,
+      "AA": 0.45114345114345117,
+      "SEH@3": 0.5592515592515592,
+      "SEH@5": 0.5841995841995842,
+      "N_at_5": 481,
+      "log_rank@3": 0.47710335752153554,
+      "EUG_gap@3": 0.10810810810810806,
+      "EUG@5": 0.7455516014234875,
+      "EUG@5_N": 281,
+      "diagnostic": {
+        "UOCS": 0.5301455301455301
+      }
+    },
+    "static_conflict": {
+      "N": 60,
+      "AA": 0.30833333333333335,
+      "SEH@3": 0.4,
+      "SEH@5": 0.48333333333333334,
+      "N_at_5": 60,
+      "log_rank@3": 0.2753953169047639,
+      "EUG_gap@3": 0.09166666666666667,
+      "EUG@5": 0.603448275862069,
+      "EUG@5_N": 29,
+      "diagnostic": {
+        "CRS": 0.2833333333333333
+      }
+    },
+    "conditional_conflict": {
+      "N": 75,
+      "AA": 0.8,
+      "SEH@3": 0.7066666666666667,
+      "SEH@5": 0.8533333333333334,
+      "N_at_5": 75,
+      "log_rank@3": 0.4066666666666667,
+      "EUG_gap@3": -0.09333333333333338,
+      "EUG@5": 0.9375,
+      "EUG@5_N": 64,
+      "diagnostic": null
+    }
+  },
+  "metric_notes": {
+    "EUG_gap@3": "upstream MemConflict EUG: SEH@3 - AA per type; macro value = Average_EUG",
+    "EUG@5": "this repo only: mean AA over questions whose gold evidence reached rank <= 5"
+  }
+}

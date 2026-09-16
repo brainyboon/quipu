@@ -1,0 +1,20 @@
+{
+  "name": "quipu",
+  "version": "1.0.0",
+  "description": "Memory for Claude Code that keeps up when things change. Captures what a session learned, keeps facts about people and organisations current with a dated history, and recalls by keywords and meaning with no model on the prompt path.",
+  "author": {
+    "name": "Brainy",
+    "url": "https://brainy.ink"
+  },
+  "homepage": "https://github.com/brainyboon/quipu",
+  "repository": "https://github.com/brainyboon/quipu",
+  "license": "MIT",
+  "keywords": [
+    "memory",
+    "recall",
+    "hooks",
+    "sqlite",
+    "embeddings",
+    "context"
+  ]
+}

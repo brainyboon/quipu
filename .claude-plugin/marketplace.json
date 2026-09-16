@@ -1,0 +1,22 @@
+{
+  "name": "brainyboon",
+  "owner": {
+    "name": "Brainy",
+    "url": "https://brainy.ink"
+  },
+  "plugins": [
+    {
+      "name": "quipu",
+      "source": "./",
+      "description": "Memory for Claude Code that keeps up when things change. Captures what a session learned, keeps facts current with a dated history, and recalls by keywords and meaning with no model on the prompt path.",
+      "version": "1.0.0",
+      "category": "productivity",
+      "keywords": [
+        "memory",
+        "recall",
+        "hooks"
+      ]
+    }
+  ],
+  "repository": "https://github.com/brainyboon/quipu"
+}

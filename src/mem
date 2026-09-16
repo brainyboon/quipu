@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# mem - one entry point for Quipu.
+#
+#   mem ask "deploy to production"  what recall would inject for that prompt
+#   mem said "the pricing model"    search everything ever SAID, in every session
+#   mem find "where did we land on X"  the same, ranked by meaning as well as words
+#   mem facts                       every recorded fact: current value, since when, what it replaced
+#   mem who                         the always-loaded profile of you
+#   mem maintain                    when did each background job last run, what is due
+#   mem skill pending|promote|reject  skills I drafted, waiting on you
+#   mem why "deploy to production"  the same, with scores and the reason
+#   mem stats                       size, enrichment coverage, flags
+#   mem health                      is MEMORY.md still fully loading?
+#   mem review                      what needs your call
+#   mem audit                       what the curator changed, newest first
+#   mem log [n]                     what fired on recent prompts
+#   mem why-that                    which memories were injected, when, for what
+#   mem unused [days]               memories never retrieved: the deletion argument
+#   mem sweep                       run the full control plane now
+#   mem verify                      check every claim against the real world
+#   mem claims <memory>             what a memory asserts, and whether it holds
+#   mem learn <transcript>          capture memories from a session by hand
+#   mem undo <file>                 revert a supersession or stale flag
+#   mem resolve <id> [--note ..]    close a review item you acted on
+#   mem dismiss <id> [--note ..]    close a review item that was not a conflict
+set -euo pipefail
+D="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cmd="${1:-help}"; shift || true
+
+case "$cmd" in
+  ask)    python3 "$D/recall.py" query "$@" ;;
+  said)   python3 "$D/sessions.py" search "$@" ;;
+  find)   python3 "$D/sessions.py" find "$@" ;;
+  facts)  python3 -c "
+import sys, os, glob, json; sys.path.insert(0, '$D')
+from memlib import MEM_ROOT, read_doc
+rows = sorted(glob.glob(os.path.join(MEM_ROOT, 'fact_*.md')), key=os.path.getmtime, reverse=True)
+for p in rows:
+    print('-', read_doc(p)[0].get('description', os.path.basename(p)))
+print('%d fact(s)' % len(rows))" ;;
+  who)    python3 "$D/profile.py" show ;;
+  maintain) python3 "$D/maintain.py" "${1:-status}" ;;
+  skill)  python3 "$D/skills.py" "$@" ;;
+  history) python3 "$D/sessions.py" "$@" ;;
+  why)    python3 "$D/recall.py" explain "$@" ;;
+  stats)  python3 "$D/recall.py" stats ;;
+  health) python3 "$D/curate.py" check ;;
+  review) python3 "$D/curate.py" review "$@" ;;
+  audit)  python3 "$D/curate.py" audit "$@" ;;
+  sweep)  python3 "$D/curate.py" run "$@" ;;
+  verify) python3 "$D/verify.py" run "$@" && echo && python3 "$D/verify.py" status ;;
+  claims) python3 "$D/verify.py" show "$@" ;;
+  undo)   python3 "$D/curate.py" undo "$@" ;;
+  resolve) python3 "$D/curate.py" resolve "$@" ;;
+  dismiss) python3 "$D/curate.py" dismiss "$@" ;;
+  learn)  python3 "$D/capture.py" session --transcript "$@" ;;
+  enrich) python3 "$D/enrich.py" run "$@" ;;
+  why-that) python3 -c "
+import sys; sys.path.insert(0,'$D')
+from memlib import connect
+import time
+for ts,s_,n,r,ch,pr in connect().execute('SELECT ts,session,nonce,rels,chars,prompt FROM injection ORDER BY ts DESC LIMIT 15'):
+    print('%s  %s  %db' % (time.strftime('%m-%d %H:%M',time.localtime(ts)), n, ch))
+    print('   prompt: %s' % pr[:70])
+    for x in r.split(','):
+        if x: print('     %s' % x)
+" ;;
+  unused) python3 -c "
+import sys,time; sys.path.insert(0,'$D')
+from memlib import connect
+d=int('${1:-90}')
+rows=list(connect().execute('SELECT rel,retrieved_n FROM doc WHERE last_retrieved=0 ORDER BY rel'))
+print('%d memories have never been retrieved since logging began' % len(rows))
+for r,_ in rows[:25]: print('  ',r)
+" ;;
+  log)    tail -"${1:-20}" "${QUIPU_LOGS:-$HOME/.claude/quipu/logs}"/memory-recall.log | \
+            awk -F'\t' '{printf "%s  %-8s %-52s %s\n", $1, $5, substr($3,1,52), $4}' ;;
+  *)      awk 'NR>1 && /^#/ {sub(/^# ?/, ""); print} /^set -euo/ {exit}' "${BASH_SOURCE[0]}" ;;
+esac

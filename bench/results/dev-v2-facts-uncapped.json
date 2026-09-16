@@ -1,0 +1,73 @@
+{
+  "system": "quipu",
+  "scored_questions": 255,
+  "question_rows_in_file": 255,
+  "unroutable_rows": {},
+  "judge_methods": {
+    "llm_judge": 255
+  },
+  "overall": {
+    "micro": {
+      "AA": 0.3941176470588235,
+      "SEH@3": 0.4588235294117647,
+      "SEH@5": 0.5490196078431373,
+      "log_rank@3": 0.3778211799299759,
+      "EUG_gap@3": 0.06470588235294117,
+      "EUG@5": 0.6928571428571428
+    },
+    "macro_memconflict_protocol": {
+      "AA": 0.22874579124579122,
+      "SEH@3": 0.2626262626262626,
+      "SEH@5": 0.30134680134680136,
+      "log_rank@3": 0.22334788147396786,
+      "EUG_gap@3": 0.033880471380471365,
+      "EUG@5": 0.8526119402985075
+    }
+  },
+  "by_conflict_type": {
+    "dynamic_conflict": {
+      "N": 198,
+      "AA": 0.4797979797979798,
+      "SEH@3": 0.5606060606060606,
+      "SEH@5": 0.6767676767676768,
+      "N_at_5": 198,
+      "log_rank@3": 0.45814884408369894,
+      "EUG_gap@3": 0.08080808080808077,
+      "EUG@5": 0.6828358208955224,
+      "EUG@5_N": 134,
+      "diagnostic": {
+        "UOCS": 0.5707070707070707
+      }
+    },
+    "static_conflict": {
+      "N": 24,
+      "AA": 0.14583333333333334,
+      "SEH@3": 0.16666666666666666,
+      "SEH@5": 0.16666666666666666,
+      "N_at_5": 24,
+      "log_rank@3": 0.15128873973214407,
+      "EUG_gap@3": 0.020833333333333315,
+      "EUG@5": 0.875,
+      "EUG@5_N": 4,
+      "diagnostic": {
+        "CRS": 0.20833333333333334
+      }
+    },
+    "conditional_conflict": {
+      "N": 33,
+      "AA": 0.06060606060606061,
+      "SEH@3": 0.06060606060606061,
+      "SEH@5": 0.06060606060606061,
+      "N_at_5": 33,
+      "log_rank@3": 0.06060606060606061,
+      "EUG_gap@3": 0.0,
+      "EUG@5": 1.0,
+      "EUG@5_N": 2,
+      "diagnostic": null
+    }
+  },
+  "metric_notes": {
+    "EUG_gap@3": "upstream MemConflict EUG: SEH@3 - AA per type; macro value = Average_EUG",
+    "EUG@5": "this repo only: mean AA over questions whose gold evidence reached rank <= 5"
+  }
+}
